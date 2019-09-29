@@ -1047,7 +1047,7 @@ ssize_t IOBuf::pcut_multiple_into_file_descriptor(
     }
     struct iovec vec[IOBUF_IOV_MAX];
     size_t nvec = 0;
-    for (size_t i = 0; i < count; ++i) {
+    for (size_t i = 0; i < count && nvec < IOBUF_IOV_MAX; ++i) {
         const IOBuf* p = pieces[i];
         const size_t nref = p->_ref_num();
         for (size_t j = 0; j < nref && nvec < IOBUF_IOV_MAX; ++j, ++nvec) {
@@ -1087,7 +1087,7 @@ ssize_t IOBuf::cut_multiple_into_writer(
     }
     struct iovec vec[IOBUF_IOV_MAX];
     size_t nvec = 0;
-    for (size_t i = 0; i < count; ++i) {
+    for (size_t i = 0; i < count && nvec < IOBUF_IOV_MAX; ++i) {
         const IOBuf* p = pieces[i];
         const size_t nref = p->_ref_num();
         for (size_t j = 0; j < nref && nvec < IOBUF_IOV_MAX; ++j, ++nvec) {
